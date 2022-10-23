@@ -1,3 +1,4 @@
+const { post } = require("../../server/routes");
 
 var url = window.location.href;
 var swLocation = '/twittor/sw.js';
@@ -143,3 +144,24 @@ postBtn.on('click', function() {
     crearMensajeHTML( mensaje, usuario );
 
 });
+
+//Obtener mensajes del servidor
+
+function getMensajes(){
+
+    fetch('api')
+    .then(res => res.json())
+    .then(posts =>{
+
+        console.log(posts);
+        posts.array.forEach(post=> {
+            crearMensajeHTML(post.mensaje, post.user);
+        });
+
+      
+
+    });
+}
+
+getMensajes();
+
