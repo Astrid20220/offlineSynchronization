@@ -46,6 +46,10 @@ function manejoApiMensajes(dynamicCache, req){
     if(req.clone().method === 'POST'){
         //POSTEO de un nuevo mensaje
 
+        req.clone().text().then(body=> {
+            console.log(body);
+        });
+
         return fetch(req);
 
     }else{
