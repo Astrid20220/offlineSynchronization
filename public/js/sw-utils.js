@@ -40,3 +40,23 @@ function actualizaCacheStatico( staticCache, req, APP_SHELL_INMUTABLE ) {
 
 }
 
+
+function manejoApiMensajes(dynamicCache, req){
+
+    return fetch(req).then(res=>{
+
+        if(res.ok){
+            actualizaCacheDinamico(cacheName, req, res.clone());
+            return res.clone();
+
+        }else{
+
+            return caches.match(req);
+        }
+
+    }).catch(err => {
+
+        return caches.match(req);
+    });
+
+}
