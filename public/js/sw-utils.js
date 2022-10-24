@@ -43,6 +43,13 @@ function actualizaCacheStatico( staticCache, req, APP_SHELL_INMUTABLE ) {
 
 function manejoApiMensajes(dynamicCache, req){
 
+    if(req.clone().method === 'POST'){
+        //POSTEO de un nuevo mensaje
+
+        return fetch(req);
+
+    }else{
+
     return fetch(req).then(res=>{
 
         if(res.ok){
@@ -59,4 +66,5 @@ function manejoApiMensajes(dynamicCache, req){
         return caches.match(req);
     });
 
+}
 }
