@@ -45,30 +45,36 @@ function manejoApiMensajes(dynamicCache, req){
 
     if(req.clone().method === 'POST'){
         //POSTEO de un nuevo mensaje
-
-        req.clone().text().then(body=> {
-            console.log(body);
-        });
-
-        return fetch(req);
-
-    }else{
-
-    return fetch(req).then(res=>{
-
-        if(res.ok){
-            actualizaCacheDinamico(cacheName, req, res.clone());
-            return res.clone();
-
-        }else{
-
-            return caches.match(req);
+if ( self.registration.sync ) {
+            return req.clone().text().then( body =>{
+    
+                // console.log(body);
+                const bodyObj = JSON.parse( body );
+                return guardarMensaje( bodyObj );
+    
+            });
+        } else {
+            return fetch( req );
         }
 
-    }).catch(err => {
 
-        return caches.match(req);
-    });
+    } else {
+
+        return fetch( req ).then( res => {
+    
+            if ( res.ok ) {
+                actualizaCacheDinamico( cacheName, req, res.clone() );
+                return res.clone();
+            } else {
+                return caches.match( req );
+            }
+      
+        }).catch( err => {
+            return caches.match( req );
+        });
+
+    }
+
 
 }
-}
+
